@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f6f0">
+  <meta name="description" content="Aegis — понятная проверка URL-адреса до перехода по ссылке.">
+  <title>Aegis — проверка ссылок</title>
+  <link rel="stylesheet" href="styles.css?v=20261116-3">
+  <script src="app.js?v=20261116-2" defer></script>
+</head>
+<body>
+  <div class="foliage-stage" aria-hidden="true">
+    <img class="foliage-leaf leaf-left leaf-upper" src="palm-frond.png" alt="" data-side="-1" data-depth=".9" data-phase="0.2">
+    <img class="foliage-leaf leaf-left leaf-lower" src="palm-frond.png" alt="" data-side="-1" data-depth=".58" data-phase="2.4">
+    <img class="foliage-leaf leaf-right leaf-upper" src="palm-frond.png" alt="" data-side="1" data-depth=".82" data-phase="1.5">
+    <img class="foliage-leaf leaf-right leaf-lower" src="palm-frond.png" alt="" data-side="1" data-depth=".5" data-phase="3.2">
+  </div>
+  <div class="page">
+    <header class="site-header">
+      <a href="#top" class="brand" aria-label="Aegis — главная"><span class="brand-mark" aria-hidden="true"></span><span>aegis<span class="brand-period">.</span></span></a>
+      <nav class="site-nav" aria-label="Основная навигация"><a href="#scanner">Проверка</a><a href="#history">История</a></nav>
+      <span class="header-state"><i></i> Локальный сервис <span class="state-arrow">↗</span></span>
+    </header>
+
+    <main id="top">
+      <section class="hero" id="scanner" aria-labelledby="hero-title">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1 id="hero-title">Проверьте ссылку<br><em>до перехода.</em></h1>
+            <p class="hero-lead">Один адрес. Понятный результат.</p>
+            <form id="scan-form" class="scan-form" novalidate>
+              <label for="url-input">Адрес для проверки</label>
+              <div class="scan-field"><span class="field-prefix" aria-hidden="true">↗</span><input id="url-input" type="text" inputmode="url" autocomplete="url" spellcheck="false" maxlength="2048" placeholder="https://example.com"><button type="submit" class="scan-button">Проверить <span aria-hidden="true">↗</span></button></div>
+            </form>
+            <div class="examples"><button type="button" class="example" data-url="https://www.wikipedia.org/">Обычный адрес</button><button type="button" class="example" data-url="http://192.0.2.5/login/verify?next=https%3A%2F%2Fexample.org">Подозрительный пример</button></div>
+            <div id="message" class="message" role="alert" hidden></div>
+            <div class="hero-trust"><span class="trust-symbol">✳</span><span><strong id="hero-feed-count">—</strong> адресов в локальной базе</span></div>
+          </div>
+          <div class="hero-art" aria-hidden="true"><img class="palm-hero" src="palm-hero.png" alt=""></div>
+        </div>
+      </section>
+
+      <section class="report" id="result-card" aria-live="polite" hidden>
+        <div class="section-heading"><h2>Разбор адреса</h2></div>
+        <div class="report-board">
+          <div class="report-score"><div class="report-score-top">Индекс риска</div><div class="score-ring" id="score-ring"><div class="score-inner"><span id="score-number">0</span><small>/ 100</small></div></div></div>
+          <div class="report-verdict"><h3 id="verdict-title"></h3><p id="verdict-summary"></p><div class="domain-row"><span>Домен</span><strong id="result-host"></strong></div></div>
+        </div>
+        <div class="analytics-grid">
+          <section class="chart-panel" aria-labelledby="chart-heading"><h3 id="chart-heading">Профиль адреса</h3><div class="chart-rows">
+            <div class="chart-row"><span>Структура</span><div class="chart-track"><i id="bar-structure"></i></div><strong id="value-structure">0</strong></div>
+            <div class="chart-row"><span>Маскировка</span><div class="chart-track"><i id="bar-disguise"></i></div><strong id="value-disguise">0</strong></div>
+            <div class="chart-row"><span>Назначение</span><div class="chart-track"><i id="bar-intent"></i></div><strong id="value-intent">0</strong></div>
+          </div></section>
+          <section class="database-panel" aria-labelledby="database-heading"><svg class="db-symbol" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="13" rx="23" ry="8"/><path d="M9 13v15c0 5 10 8 23 8s23-3 23-8V13M9 28v15c0 5 10 8 23 8s23-3 23-8V28"/></svg><h3 id="database-heading">База угроз</h3><p id="database-description">PhishTank · локально</p><div class="database-data"><div><small>Записей</small><strong id="database-count">—</strong></div><div><small>Обновлено</small><strong id="database-date">—</strong></div></div><div id="database-result" class="database-result">Загружаем статус базы…</div></section>
+        </div>
+        <div class="findings-section"><div class="findings-title"><h3>Признаки риска</h3></div><div id="findings" class="findings"></div></div>
+        <p class="report-note"><span>ⓘ</span> Оценка основана на признаках URL. Отсутствие совпадения не гарантирует безопасность.</p>
+      </section>
+      <section class="history-section" id="history"><div class="history-layout"><div><h2>История</h2><button type="button" id="clear-history" class="clear-button">Очистить <span>↗</span></button></div><div id="history-list" class="history-list"><div class="empty-history">Проверок пока нет.</div></div></div></section>
+    </main>
+    <footer class="site-footer">
+      <svg class="shoreline" viewBox="0 0 1440 140" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <defs><linearGradient id="sand-wash" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f5f5ee"/><stop offset="1" stop-color="#e7dec5"/></linearGradient></defs>
+        <path class="shore-sand" d="M0 0H1440V48C1260 20 1160 64 1000 55C840 48 780 92 610 78C430 95 260 99 0 78Z"/>
+        <path class="shore-foam" d="M0 78C260 99 430 95 610 78C780 92 840 48 1000 55C1160 64 1260 20 1440 48"/>
+      </svg>
+      <div class="footer-content"><span class="footer-mark" aria-hidden="true"></span><strong>aegis.</strong><p>Проверяйте сначала. Переходите осознанно.</p></div>
+    </footer>
+  </div>
+</body>
+</html>
